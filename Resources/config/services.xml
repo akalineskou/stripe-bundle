@@ -8,8 +8,13 @@
         <service id="miracode_stripe.model_transformer.annotation"
                  class="Miracode\StripeBundle\Transformer\AnnotationTransformer">
         </service>
+
         <service id="Miracode\StripeBundle\Stripe\StripeClient">
             <argument>%miracode_stripe.secret_key%</argument>
+        </service>
+
+        <service id="Miracode\StripeBundle\Controller\WebhookController" autowire="true" autoconfigure="true">
+            <tag name="controller.service_arguments"/>
         </service>
     </services>
 

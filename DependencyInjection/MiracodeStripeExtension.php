@@ -40,6 +40,11 @@ class MiracodeStripeExtension extends Extension
             $config['webhook_secret']
         );
 
+        $container->setParameter(
+            'miracode_stripe.verify_stripe_signature',
+            $config['verify_stripe_signature']
+        );
+
         if (!empty($config['database']) && !empty($config['database']['model'])) {
             if (!empty($config['database']['model_transformer'])) {
                 $container->setAlias(
