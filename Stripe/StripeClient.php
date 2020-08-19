@@ -12,6 +12,7 @@ namespace Miracode\StripeBundle\Stripe;
 use Stripe\Card;
 use Stripe\Stripe,
     Stripe\Charge,
+    Stripe\Checkout\Session,
     Stripe\Customer,
     Stripe\Coupon,
     Stripe\Plan,
@@ -149,9 +150,9 @@ class StripeClient extends Stripe
      *
      * @return Card
      */
-    public function retrieveCard($cardId)
+    public function retrieveCard($customerId, $cardId)
     {
-        return Card::retrieve($cardId);
+        return Customer::retrieveSource($customerId, $cardId);
     }
 
     /**
@@ -239,7 +240,7 @@ class StripeClient extends Stripe
     {
         $data = [
             'customer'      => $customerId,
-            'items'          => $items
+            'items'         => $items
         ];
 
         if (is_array($parameters) && !empty($parameters)) {
@@ -284,8 +285,8 @@ class StripeClient extends Stripe
      * @param string $paymentToken: The payment token returned by the payment form (Stripe.js)
      * @param string $stripeAccountId: The connected stripe account ID
      * @param int    $applicationFee: The fee taken by the platform, in cents
-     * @param string $description: An optional charge description
-     * @param array  $metadata: An optional array of metadatas
+     * @param string $chargeDescription: An optional charge description
+     * @param array  $chargeMetadata: An optional array of metadatas
      *
      * @return Charge
      */
@@ -359,7 +360,7 @@ class StripeClient extends Stripe
      * @param string $email: An optional customer e-mail
      * @param array $parameters: Optional additional parameters, the complete list is available here: https://stripe.com/docs/api#create_customer
      *
-     * @return Charge
+     * @return Customer
      */
     public function createCustomer($paymentToken, $email = null, $parameters = [])
     {
@@ -388,8 +389,8 @@ class StripeClient extends Stripe
      * @param string $customerId: The Stripe Customer object ID
      * @param string $stripeAccountId: The connected stripe account ID
      * @param int    $applicationFee: The fee taken by the platform, in cents
-     * @param string $description: An optional charge description
-     * @param array  $metadata: An optional array of metadatas
+     * @param string $chargeDescription: An optional charge description
+     * @param array  $chargeMetadata: An optional array of metadatas
      *
      * @return Charge
      */
@@ -514,7 +515,7 @@ class StripeClient extends Stripe
      * @param array $parameters Additional parameters to pass to the constructor
      * @return Coupon
      */
-    public function createCoupon($id, $duration, $isPercentage = true, $discount, $parameters = [])
+    public function createCoupon($id, $duration, $discount, $parameters = [], $isPercentage = true)
     {
 
         $data = [
@@ -533,5 +534,28 @@ class StripeClient extends Stripe
         }
 
         return Coupon::create($data);
+    }
+
+    /**
+     * @param string $cancelUrl
+     * @param string $mode
+     * @param array $paymentMethodTypes
+     * @param array $parameters
+     * @return Session
+     */
+    public function createCheckoutSession($cancelUrl, $mode, $paymentMethodTypes, $parameters = [])
+    {
+
+        $data = [
+            'cancel_url' => $cancelUrl,
+            'mode' => $mode,
+            'payment_method_types' => $paymentMethodTypes,
+        ];
+
+        if (is_array($parameters) && !empty($parameters)) {
+            $data = array_merge($parameters, $data);
+        }
+
+        return Session::create($data);
     }
 }
