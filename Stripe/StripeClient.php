@@ -537,16 +537,18 @@ class StripeClient extends Stripe
     }
 
     /**
+     * @param string $successUrl
      * @param string $cancelUrl
      * @param string $mode
      * @param array $paymentMethodTypes
      * @param array $parameters
      * @return Session
      */
-    public function createCheckoutSession($cancelUrl, $mode, $paymentMethodTypes, $parameters = [])
+    public function createCheckoutSession($successUrl, $cancelUrl, $mode, $paymentMethodTypes, $parameters = [])
     {
 
         $data = [
+            'success_url' => $successUrl,
             'cancel_url' => $cancelUrl,
             'mode' => $mode,
             'payment_method_types' => $paymentMethodTypes,
