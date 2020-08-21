@@ -349,23 +349,20 @@ class StripeClient extends Stripe
     }
 
     /**
-     * Create a new Charge from a payment token, to an optional connected stripe account, with an optional application fee.
+     * Create a new customer
      *
      * @throws HttpException:
-     *     - If the payment token is invalid (payment failed)
      *
-     * @see https://stripe.com/docs/charges#saving-credit-card-details-for-later
+     * @see https://stripe.com/docs/api/customers/create
      *
-     * @param string $paymentToken: The payment token returned by the payment form (Stripe.js)
      * @param string $email: An optional customer e-mail
      * @param array $parameters: Optional additional parameters, the complete list is available here: https://stripe.com/docs/api#create_customer
      *
      * @return Customer
      */
-    public function createCustomer($paymentToken, $email = null, $parameters = [])
+    public function createCustomer($email = null, $parameters = [])
     {
         $data = [
-            'source' => $paymentToken,
             'email' => $email
         ];
 
