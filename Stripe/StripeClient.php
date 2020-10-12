@@ -10,6 +10,7 @@
 namespace Miracode\StripeBundle\Stripe;
 
 use Stripe\Card;
+use Stripe\EphemeralKey;
 use Stripe\Stripe,
     Stripe\Charge,
     Stripe\Checkout\Session,
@@ -556,5 +557,29 @@ class StripeClient extends Stripe
         }
 
         return Session::create($data);
+    }
+
+    /**
+     * @param string $customerId
+     * @param string $stripeVersion
+     * @param array $parameters
+     * @return EphemeralKey
+     */
+    public function createEphemeralKey($customerId, $stripeVersion, $parameters = [])
+    {
+
+        $data = [
+            'customer' => $customerId,
+        ];
+
+        if (is_array($parameters) && !empty($parameters)) {
+            $data = array_merge($parameters, $data);
+        }
+
+        $opts = [
+            'stripe_version' => $stripeVersion,
+        ];
+
+        return EphemeralKey::create($data, $opts);
     }
 }
