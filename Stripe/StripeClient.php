@@ -10,17 +10,18 @@
 namespace Miracode\StripeBundle\Stripe;
 
 use Stripe\Card;
+use Stripe\Charge;
+use Stripe\Checkout\Session;
+use Stripe\Coupon;
+use Stripe\Customer;
 use Stripe\EphemeralKey;
-use Stripe\Stripe,
-    Stripe\Charge,
-    Stripe\Checkout\Session,
-    Stripe\Customer,
-    Stripe\Coupon,
-    Stripe\Plan,
-    Stripe\Product,
-    Stripe\Subscription,
-    Stripe\SubscriptionItem,
-    Stripe\Refund;
+use Stripe\PaymentIntent;
+use Stripe\Plan;
+use Stripe\Product;
+use Stripe\Refund;
+use Stripe\Stripe;
+use Stripe\Subscription;
+use Stripe\SubscriptionItem;
 
 /**
  *
@@ -581,5 +582,27 @@ class StripeClient extends Stripe
         ];
 
         return EphemeralKey::create($data, $opts);
+    }
+
+    /**
+     * @param int $amount
+     * @param array $paymentMethodTypes
+     * @param array $parameters
+     * @return PaymentIntent
+     */
+    public function createPaymentIntent($amount, $paymentMethodTypes, $parameters = [])
+    {
+
+        $data = [
+            'amount' => $amount,
+            'currency' => 'usd',
+            'payment_method_types' => $paymentMethodTypes,
+        ];
+
+        if (is_array($parameters) && !empty($parameters)) {
+            $data = array_merge($parameters, $data);
+        }
+
+        return PaymentIntent::create($data);
     }
 }
