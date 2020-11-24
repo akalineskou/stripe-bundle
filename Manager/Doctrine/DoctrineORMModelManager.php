@@ -103,9 +103,13 @@ class DoctrineORMModelManager implements ModelManagerInterface
         $model = $this->retrieve($object);
         if (!$model) {
             $model = $this->createModel($object);
+            // transform before persist for prePersist lifecycle event
+            $this->modelTransformer->transform($object, $model);
             $this->objectManager->persist($model);
+        } else {
+            $this->modelTransformer->transform($object, $model);
         }
-        $this->modelTransformer->transform($object, $model);
+
         if ($flush) {
             $this->objectManager->flush();
         }
