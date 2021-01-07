@@ -31,7 +31,7 @@ abstract class AbstractSubscriptionModel extends StripeModel
     /**
      * @StripeObjectParam(name="canceled_at")
      *
-     * @var int
+     * @var int|null
      */
     protected $canceledAt;
 
@@ -215,7 +215,7 @@ abstract class AbstractSubscriptionModel extends StripeModel
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getCanceledAt()
     {
@@ -223,7 +223,7 @@ abstract class AbstractSubscriptionModel extends StripeModel
     }
 
     /**
-     * @param int $canceledAt
+     * @param int|null $canceledAt
      *
      * @return $this
      */
