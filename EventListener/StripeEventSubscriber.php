@@ -45,8 +45,9 @@ class StripeEventSubscriber implements EventSubscriberInterface
             StripeEvent::CUSTOMER_SOURCE_UPDATED => 'onStripeEvent',
             StripeEvent::CUSTOMER_SUBSCRIPTION_CREATED => 'onStripeEvent',
             StripeEvent::CUSTOMER_SUBSCRIPTION_UPDATED => 'onStripeEvent',
-            StripeEvent::CUSTOMER_SUBSCRIPTION_DELETED => 'onStripeEvent',
             StripeEvent::CUSTOMER_SUBSCRIPTION_TRIAL_WILL_END => 'onStripeEvent',
+            StripeEvent::TAX_RATE_CREATED => 'onStripeEvent',
+            StripeEvent::TAX_RATE_UPDATED => 'onStripeEvent',
             StripeEvent::INVOICE_CREATED => 'onStripeEvent',
             StripeEvent::INVOICE_FINALIZED => 'onStripeEvent',
             StripeEvent::INVOICE_PAYMENT_FAILED => 'onStripeEvent',
@@ -62,10 +63,9 @@ class StripeEventSubscriber implements EventSubscriberInterface
             StripeEvent::SOURCE_FAILED => 'onStripeEvent',
 
             StripeEvent::COUPON_DELETED => 'onStripeDeleteEvent',
-            StripeEvent::TAX_RATE_CREATED => 'onStripeEvent',
-            StripeEvent::TAX_RATE_UPDATED => 'onStripeEvent',
             StripeEvent::CUSTOMER_DELETED => 'onStripeDeleteEvent',
             StripeEvent::CUSTOMER_SOURCE_DELETED => 'onStripeDeleteEvent',
+            StripeEvent::CUSTOMER_SUBSCRIPTION_DELETED => 'onStripeDeleteEvent',
             StripeEvent::PAYMENT_METHOD_DETACHED => 'onStripeDeleteEvent',
             StripeEvent::PLAN_DELETED => 'onStripeDeleteEvent',
         ];
