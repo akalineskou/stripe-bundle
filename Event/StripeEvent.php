@@ -44,6 +44,8 @@ class StripeEvent extends Event
     const INVOICE_UPDATED = 'stripe.invoice.updated';
     const INVOICE_PAID = 'stripe.invoice.paid';
     const INVOICE_VOIDED = 'stripe.invoice.voided';
+    const PAYMENT_METHOD_ATTACHED = 'stripe.payment_method.attached';
+    const PAYMENT_METHOD_DETACHED = 'stripe.payment_method.detached';
     const PLAN_CREATED = 'stripe.plan.created';
     const PLAN_DELETED = 'stripe.plan.deleted';
     const PLAN_UPDATED = 'stripe.plan.updated';
